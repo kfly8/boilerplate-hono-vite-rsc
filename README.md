@@ -1,68 +1,41 @@
-# Hono + Vite + React Server Components + shadcn/ui
+# Hono + Vite + React Server Components Boilerplate
 
-Modern tech stack trial with React Server Components
+A modern web application boilerplate using Hono framework with Vite and React Server Components (RSC).
 
 ## Features
 
-- 🔥 **[Hono](https://hono.dev)**
-- ⚙️  **[Vite](https://vite.dev/)**
-- ⚡ **React Server Components** - powered by [@vitejs/plugin-rsc](https://www.npmjs.com/package/@vitejs/plugin-rsc)
-- 🎨 **[shadcn/ui](https://ui.shadcn.com/)**
+- **Hono** - Lightweight, fast web framework for the Edge
+- **Vite** - Fast development and build tooling
+- **React Server Components** - Next-generation React architecture
+- **Tailwind CSS v4** - Utility-first CSS framework
 
-## Getting Started
+## Tech Stack
 
-### Installation
+- [Hono](https://hono.dev/) - Web framework
+- [Vite](https://vitejs.dev/) - Build tool
+- [React 19](https://react.dev/) - UI library with Server Components
+- [Tailwind CSS v4](https://tailwindcss.com/) - Styling
 
-```bash
-# Install dependencies
-bun install
-```
-
-### Development
-
-```bash
-# Start development server
-bun run dev
-```
-
-### Build
-
-```bash
-# Build for production
-bun run build
-```
-
-### Preview
-
-```bash
-# Preview production build
-bun run preview
-```
 
 ## Project Structure Summary
 
 ```
 src/
-├── assets/          # Static assets (logos, etc.)
-├── components/      # Reusable components
-│   ├── ui/          # shadcn/ui components with Storybook stories
-│   └── Layout.tsx 
-│
-├── routes/                   # File-based routing
-│   ├── api/
-│   │   └── users/            # GET /api/users
-│   ├── counter/              # GET /counter
-│   │    ├── index.tsx        # Route handler
-│   │    ├── index.test.ts    # Route tests
-│   │    ├── page.tsx         # Page component
-│   │    ├── page.stories.tsx # Page story
-│   │    └── components/      # Route-specific components
-│   ├── _404.tsx              # 404 error page
-│   └── _error.tsx            # Error handling page
-│
-├── rsc/                      # React Server Components entry points
-├── cloudflare-workers.tsx    # Cloudflare Workers deployment
-├── server.ts                 # Main server with auto-routing
-└── style.css                 # Global Tailwind styles
+├── cloudflare-workers.tsx  # Cloudflare Workers entry point
+├── server.ts               # Hono server configuration
+├── components/             # Shared React components
+│   └── Layout.tsx         # Main layout component
+├── routes/                # File-based routing
+│   ├── _404.tsx          # 404 page
+│   ├── _error.tsx        # Error page
+│   └── home/             # Home route
+│       ├── index.tsx     # Route handler
+│       ├── page.tsx      # Page component
+│       └── components/   # Route-specific components
+└── rsc/                   # React Server Components setup
+    ├── entry.browser.tsx  # Browser entry point
+    ├── entry.rsc.tsx     # RSC entry point
+    ├── entry.ssr.tsx     # SSR entry point
+    └── rsc-renderer.tsx  # RSC renderer middleware
 ```
 
