@@ -2,20 +2,27 @@
 
 A modern web application boilerplate using Hono framework with Vite and React Server Components (RSC).
 
-## Features
-
-- **Hono** - Lightweight, fast web framework for the Edge
-- **Vite** - Fast development and build tooling
-- **React Server Components** - Next-generation React architecture
-- **Tailwind CSS v4** - Utility-first CSS framework
-
 ## Tech Stack
 
-- [Hono](https://hono.dev/) - Web framework
-- [Vite](https://vitejs.dev/) - Build tool
+- [Hono](https://hono.dev/) - Lightweight, fast web framework
+- [Vite](https://vitejs.dev/) - Fast development and build tooling
 - [React 19](https://react.dev/) - UI library with Server Components
-- [Tailwind CSS v4](https://tailwindcss.com/) - Styling
+- [Tailwind CSS v4](https://tailwindcss.com/) - Utility-first CSS framework
 
+## Boilerplate Usage
+
+1. Use this boilerplate
+2. Install dependencies
+
+```sh
+npm install
+```
+
+3. Run dev server
+
+```sh
+npm run dev
+```
 
 ## Project Structure Summary
 
@@ -38,4 +45,8 @@ src/
     ├── entry.ssr.tsx     # SSR entry point
     └── rsc-renderer.tsx  # RSC renderer middleware
 ```
+
+## License
+
+[MIT](./LICENSE)
 
