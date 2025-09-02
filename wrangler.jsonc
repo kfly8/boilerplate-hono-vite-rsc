@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "boilerplate-hono-vite-rsc",
+  "compatibility_date": "2025-08-03",
+  "compatibility_flags": [ "nodejs_als" ],
+  "main": "./dist/rsc/workers.js",
+  "assets": {
+    "directory": "dist/client"
+  }
+}
