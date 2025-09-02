@@ -9,20 +9,44 @@ A modern web application boilerplate using Hono framework with Vite and React Se
 - [React 19](https://react.dev/) - UI library with Server Components
 - [Tailwind CSS v4](https://tailwindcss.com/) - Utility-first CSS framework
 
-## Boilerplate Usage
+## Getting Started
 
-1. Use this boilerplate
+### Prerequisites
+
+- Node.js 18+
+- npm, yarn, pnpm or bun
+
+### Setup
+
+1. Clone or use this template
+
+```sh
+git clone https://github.com/kfly8/boilerplate-hono-vite-rsc.git
+cd boilerplate-hono-vite-rsc
+```
+
 2. Install dependencies
 
 ```sh
 npm install
 ```
 
-3. Run dev server
+3. Start development server
 
 ```sh
 npm run dev
 ```
+
+Open http://localhost:5173 to view the application.
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run deploy` - Deploy to Cloudflare Workers
+- `npm run cf-preview` - Preview with Wrangler locally
+- `npm run cf-typegen` - Generate Cloudflare binding types
 
 ## Project Structure Summary
 
