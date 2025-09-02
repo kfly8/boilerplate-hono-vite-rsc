@@ -70,6 +70,10 @@ src/
     └── rsc-renderer.tsx  # RSC renderer middleware
 ```
 
+## Examples
+
+Looking for a more feature-rich example? Check out [hono-vite-rsc-shadcnui](https://github.com/kfly8-sandbox/hono-vite-rsc-shadcnui) for an implementation with shadcn/ui components.
+
 ## License
 
 [MIT](./LICENSE)
