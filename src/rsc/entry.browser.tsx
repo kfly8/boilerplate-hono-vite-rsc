@@ -32,31 +32,12 @@ async function main() {
     setPayload(payload)
   }
 
-  ReactClient.setServerCallback(async (id, args) => {
-    const url = new URL(window.location.href)
-    const temporaryReferences = ReactClient.createTemporaryReferenceSet()
-    const payload = await ReactClient.createFromFetch<RscPayload>(
-      fetch(url, {
-        method: 'POST',
-        body: await ReactClient.encodeReply(args, { temporaryReferences }),
-        headers: {
-          'x-rsc-action': id,
-        },
-      }),
-      { temporaryReferences },
-    )
-    setPayload(payload)
-    return payload.returnValue
-  })
-
   const browserRoot = (
     <React.StrictMode>
       <BrowserRoot />
     </React.StrictMode>
   )
-  ReactDOMClient.hydrateRoot(document, browserRoot, {
-    formState: initialPayload.formState,
-  })
+  ReactDOMClient.hydrateRoot(document, browserRoot)
 
   if (import.meta.hot) {
     import.meta.hot.on('rsc:update', () => {

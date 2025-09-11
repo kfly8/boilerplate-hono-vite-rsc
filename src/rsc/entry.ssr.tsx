@@ -1,6 +1,5 @@
 import * as ReactClient from '@vitejs/plugin-rsc/ssr'
 import React from 'react'
-import type { ReactFormState } from 'react-dom/client'
 import * as ReactDOMServer from 'react-dom/server.edge'
 import { injectRSCPayload } from 'rsc-html-stream/server'
 import type { RscPayload } from './types'
@@ -8,7 +7,6 @@ import type { RscPayload } from './types'
 export async function renderHTML(
   rscStream: ReadableStream<Uint8Array>,
   options: {
-    formState?: ReactFormState
     nonce?: string
     debugNojs?: boolean
   },
@@ -32,7 +30,6 @@ export async function renderHTML(
       ? undefined
       : bootstrapScriptContent,
     nonce: options?.nonce,
-    ...{ formState: options?.formState },
   })
 
   let responseStream: ReadableStream<Uint8Array> = htmlStream
