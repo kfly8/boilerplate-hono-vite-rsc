@@ -2,7 +2,7 @@ import * as ReactClient from '@vitejs/plugin-rsc/browser'
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import { rscStream } from 'rsc-html-stream/client'
-import type { RscPayload } from './entry.rsc'
+import type { RscPayload } from './types'
 
 async function main() {
   let setPayload: (v: RscPayload) => void

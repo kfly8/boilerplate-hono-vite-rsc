@@ -1,7 +1,7 @@
 import { createMiddleware } from 'hono/factory'
 import * as ReactServer from '@vitejs/plugin-rsc/rsc'
-import type { RscPayload } from './entry.rsc'
 import type { ReactFormState } from 'react-dom/client'
+import type { RscPayload } from './types'
 
 // Props interface that can be extended by users
 export interface Props {
