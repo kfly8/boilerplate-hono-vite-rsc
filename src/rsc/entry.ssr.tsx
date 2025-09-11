@@ -8,7 +8,6 @@ export async function renderHTML(
   rscStream: ReadableStream<Uint8Array>,
   options: {
     nonce?: string
-    debugNojs?: boolean
   },
 ) {
   const [rscStream1, rscStream2] = rscStream.tee()
@@ -26,20 +25,15 @@ export async function renderHTML(
   const bootstrapScriptContent =
     await import.meta.viteRsc.loadBootstrapScriptContent('index')
   const htmlStream = await ReactDOMServer.renderToReadableStream(<SsrRoot />, {
-    bootstrapScriptContent: options?.debugNojs
-      ? undefined
-      : bootstrapScriptContent,
+    bootstrapScriptContent,
     nonce: options?.nonce,
   })
 
-  let responseStream: ReadableStream<Uint8Array> = htmlStream
-  if (!options?.debugNojs) {
-    responseStream = responseStream.pipeThrough(
-      injectRSCPayload(rscStream2, {
-        nonce: options?.nonce,
-      }),
-    )
-  }
+  const responseStream: ReadableStream<Uint8Array> = htmlStream.pipeThrough(
+    injectRSCPayload(rscStream2, {
+      nonce: options?.nonce,
+    }),
+  )
 
   return responseStream
 }

@@ -3,6 +3,7 @@ import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import { rscStream } from 'rsc-html-stream/client'
 import type { RscPayload } from './types'
+import { generateRequestId } from './utils/request-id'
 
 async function main() {
   let setPayload: (v: RscPayload) => void
@@ -26,8 +27,17 @@ async function main() {
   }
 
   async function fetchRscPayload() {
+    const requestId = generateRequestId(window.location.href)
+
+    const url = new URL(window.location.href, window.location.origin)
+    url.searchParams.set('_rsc', requestId)
+
     const payload = await ReactClient.createFromFetch<RscPayload>(
-      fetch(window.location.href),
+      fetch(url.toString(), {
+        headers: {
+          'RSC': '1',
+        },
+      })
     )
     setPayload(payload)
   }
@@ -63,30 +73,7 @@ function listenNavigation(onNavigation: () => void) {
     return res
   }
 
-  function onClick(e: MouseEvent) {
-    let link = (e.target as Element).closest('a')
-    if (
-      link &&
-      link instanceof HTMLAnchorElement &&
-      link.href &&
-      (!link.target || link.target === '_self') &&
-      link.origin === location.origin &&
-      !link.hasAttribute('download') &&
-      e.button === 0 &&
-      !e.metaKey &&
-      !e.ctrlKey &&
-      !e.altKey &&
-      !e.shiftKey &&
-      !e.defaultPrevented
-    ) {
-      e.preventDefault()
-      history.pushState(null, '', link.href)
-    }
-  }
-  document.addEventListener('click', onClick)
-
   return () => {
-    document.removeEventListener('click', onClick)
     window.removeEventListener('popstate', onNavigation)
     window.history.pushState = oldPushState
     window.history.replaceState = oldReplaceState
