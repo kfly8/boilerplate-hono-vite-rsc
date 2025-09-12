@@ -20,6 +20,7 @@ declare module 'hono' {
 
 export const rscRenderer = ({ Layout }: RscRendererOptions) => {
   return createMiddleware(async (c, next) => {
+  const request = c.req.raw
 
   // Set up the render function
   c.setRenderer(async (component: React.ReactNode, props?: Props) => {
@@ -36,7 +37,11 @@ export const rscRenderer = ({ Layout }: RscRendererOptions) => {
     )
 
     // Check if this is an RSC request or HTML request
-    const isRscRequest = c.req.header('RSC') === '1'
+    const url = new URL(request.url)
+    const isRscRequest =
+      (!request.headers.get('accept')?.includes('text/html') &&
+        !url.searchParams.has('__html')) ||
+      url.searchParams.has('__rsc')
 
     if (isRscRequest) {
       return c.body(rscStream, 200, {
@@ -49,7 +54,9 @@ export const rscRenderer = ({ Layout }: RscRendererOptions) => {
     const ssrEntryModule = await import.meta.viteRsc.loadModule<
       typeof import('./entry.ssr.js')
     >('ssr', 'index')
-    const htmlStream = await ssrEntryModule.renderHTML(rscStream, { })
+    const htmlStream = await ssrEntryModule.renderHTML(rscStream, {
+      debugNojs: url.searchParams.has('__nojs'),
+    })
 
     return c.body(htmlStream, 200, {
       'Content-Type': 'text/html; charset=utf-8',
