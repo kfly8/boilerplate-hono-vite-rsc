@@ -2,7 +2,7 @@ import * as ReactClient from '@vitejs/plugin-rsc/browser'
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import { rscStream } from 'rsc-html-stream/client'
-import type { RscPayload } from './types'
+import type { RscPayload } from './entry.rsc'
 
 async function main() {
   let setPayload: (v: RscPayload) => void
@@ -32,12 +32,31 @@ async function main() {
     setPayload(payload)
   }
 
+  ReactClient.setServerCallback(async (id, args) => {
+    const url = new URL(window.location.href)
+    const temporaryReferences = ReactClient.createTemporaryReferenceSet()
+    const payload = await ReactClient.createFromFetch<RscPayload>(
+      fetch(url, {
+        method: 'POST',
+        body: await ReactClient.encodeReply(args, { temporaryReferences }),
+        headers: {
+          'x-rsc-action': id,
+        },
+      }),
+      { temporaryReferences },
+    )
+    setPayload(payload)
+    return payload.returnValue
+  })
+
   const browserRoot = (
     <React.StrictMode>
       <BrowserRoot />
     </React.StrictMode>
   )
-  ReactDOMClient.hydrateRoot(document, browserRoot)
+  ReactDOMClient.hydrateRoot(document, browserRoot, {
+    formState: initialPayload.formState,
+  })
 
   if (import.meta.hot) {
     import.meta.hot.on('rsc:update', () => {
